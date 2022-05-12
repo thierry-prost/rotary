@@ -14,17 +14,19 @@ interface TileProps {
 export const Tile = forwardRef<HTMLDivElement, TileProps>(
   ({ children, icon: Icon, title }, ref) => (
     <Grid container ref={ref}>
-      <Grid item xs={12}>
+      <Grid item xs={12} justifyContent="center" display="flex">
         <Center>
           <Background>
-            <Icon />
+            <Icon color="white" />
           </Background>
         </Center>
       </Grid>
-      <Grid item xs={12}>
-        <Typography variant="h6">{title}</Typography>
+      <Grid item xs={12} justifyContent="center" display="flex">
+        <Typography variant="h6" textAlign="center">
+          {title}
+        </Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} justifyContent="center" display="flex">
         {children}
       </Grid>
     </Grid>
