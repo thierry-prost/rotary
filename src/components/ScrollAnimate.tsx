@@ -24,7 +24,7 @@ export const ScrollAnimate: FC<ScrollAnimateProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState<boolean>(false);
   return (
-    <Box>
+    <Box style={{ height: "100%" }}>
       <Container direction={direction} ref={containerRef} heightPx={heightPx} />
       <ReactVisibilitySensor
         partialVisibility
@@ -35,7 +35,7 @@ export const ScrollAnimate: FC<ScrollAnimateProps> = ({
           timeout={{ enter: 2 * dur + delay, exit: 0 }}
           style={{ transitionDelay: `${visible ? delay : 0}ms` }}
         >
-          <div>
+          <div style={{ height: "100%" }}>
             <HideDelay delay={delay} visible={visible}>
               <Slide
                 in={visible}
@@ -72,6 +72,7 @@ const hide = keyframes`
 `;
 
 const HideDelay = styled.div<{ delay: number; visible: boolean }>`
+  height: 100%;
   visibility: hidden;
   animation: ${hide} 0ms ${({ visible, delay }) => (visible ? delay : 0)}ms
     forwards;

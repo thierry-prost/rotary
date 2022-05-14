@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const HideOnScroll: FC<Props> = ({ children }) => {
-  const trigger = useScrollTrigger();
+  const trigger = useScrollTrigger({ threshold: 150 });
 
   return (
     <Slide appear={false} direction="down" in={!trigger}>

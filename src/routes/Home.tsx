@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { ForwardedRef, forwardRef, FunctionComponent } from "react";
 import { ReactComponent as Disease } from "../assets/Disease.svg";
 import { ReactComponent as Economic } from "../assets/Economic.svg";
 import { ReactComponent as Education } from "../assets/Education.svg";
@@ -13,6 +13,8 @@ import {
   AppBar,
   Container,
   Grid,
+  Paper,
+  PaperProps,
   Toolbar,
   Typography,
   useMediaQuery,
@@ -57,10 +59,14 @@ export const Home: FunctionComponent<HomeProps> = () => {
         </Typography>
       </Container>
       <Container maxWidth="md">
-        <Grid container spacing={3}>
+        <Grid container spacing={1}>
           <Grid item xs={12} md={6} lg={4}>
             <ScrollAnimate>
-              <Tile title="Disease Prevention and Treatment" icon={Disease}>
+              <Tile
+                component={Background}
+                title="Disease Prevention and Treatment"
+                icon={Disease}
+              >
                 <Typography
                   textAlign="center"
                   variant="body2"
@@ -75,7 +81,11 @@ export const Home: FunctionComponent<HomeProps> = () => {
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <ScrollAnimate delayMs={md || lg ? 300 : 0}>
-              <Tile title="Peace and Conflict Resolution" icon={Peace}>
+              <Tile
+                component={Background}
+                title="Peace and Conflict Resolution"
+                icon={Peace}
+              >
                 <Typography
                   textAlign="center"
                   variant="body2"
@@ -92,7 +102,11 @@ export const Home: FunctionComponent<HomeProps> = () => {
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <ScrollAnimate delayMs={lg ? 600 : 0}>
-              <Tile title="Clean Water and Sanitation" icon={Water}>
+              <Tile
+                component={Background}
+                title="Clean Water and Sanitation"
+                icon={Water}
+              >
                 <Typography
                   textAlign="center"
                   variant="body2"
@@ -108,7 +122,11 @@ export const Home: FunctionComponent<HomeProps> = () => {
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <ScrollAnimate delayMs={md ? 300 : 0}>
-              <Tile title="Maternal and Child Health" icon={Maternal}>
+              <Tile
+                component={Background}
+                title="Maternal and Child Health"
+                icon={Maternal}
+              >
                 <Typography
                   textAlign="center"
                   variant="body2"
@@ -123,7 +141,11 @@ export const Home: FunctionComponent<HomeProps> = () => {
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <ScrollAnimate delayMs={md ? 0 : 300}>
-              <Tile title="Basic Education and Literacy" icon={Education}>
+              <Tile
+                title="Basic Education and Literacy"
+                icon={Education}
+                component={Background}
+              >
                 <Typography
                   textAlign="center"
                   variant="body2"
@@ -140,7 +162,11 @@ export const Home: FunctionComponent<HomeProps> = () => {
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <ScrollAnimate delayMs={lg ? 600 : md ? 300 : 0}>
-              <Tile title="Economic and Community Development" icon={Economic}>
+              <Tile
+                component={Background}
+                title="Economic and Community Development"
+                icon={Economic}
+              >
                 <Typography
                   textAlign="center"
                   variant="body2"
@@ -155,7 +181,11 @@ export const Home: FunctionComponent<HomeProps> = () => {
           <Grid item xs={0} md={3} lg={4} />
           <Grid item xs={12} md={6} lg={4}>
             <ScrollAnimate>
-              <Tile title="Supporting the Environment" icon={Environment}>
+              <Tile
+                component={Background}
+                title="Supporting the Environment"
+                icon={Environment}
+              >
                 <Typography
                   textAlign="center"
                   variant="body2"
@@ -174,6 +204,22 @@ export const Home: FunctionComponent<HomeProps> = () => {
     </>
   );
 };
+
+const Background = forwardRef(
+  (props: PaperProps, ref: ForwardedRef<HTMLDivElement>) => (
+    <Paper
+      sx={{
+        p: 2,
+        m: 1,
+        mb: 4,
+        height: "100%",
+        //  boxSizing: "border-box", height: "100%"
+      }}
+      {...props}
+      ref={ref}
+    />
+  )
+);
 
 const Scrollbar = () => (
   <HideOnScroll>

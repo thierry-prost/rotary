@@ -1,37 +1,22 @@
 import styled from "@emotion/styled";
+import { styled as muiStyled } from "@mui/system";
 import Grid from "@mui/material/Grid";
+import { OverrideProps } from "@mui/material/OverridableComponent";
 import Typography from "@mui/material/Typography";
-import React, { forwardRef } from "react";
+import React, { ForwardedRef, forwardRef } from "react";
 
-interface TileProps {
-  children: React.ReactElement;
-  title: string;
-  icon: React.FunctionComponent<
-    React.SVGProps<SVGSVGElement> & { title?: string }
-  >;
+interface TileTypeMap<P = {}, D extends React.ElementType = "div"> {
+  props: P & {
+    children?: React.ReactNode;
+    title: string;
+    icon: React.FunctionComponent<
+      React.SVGProps<SVGSVGElement> & { title?: string }
+    >;
+  };
+  defaultComponent: D;
 }
 
-export const Tile = forwardRef<HTMLDivElement, TileProps>(
-  ({ children, icon: Icon, title }, ref) => (
-    <Grid container ref={ref}>
-      <Grid item xs={12} justifyContent="center" display="flex">
-        <Center>
-          <Background>
-            <Icon color="white" />
-          </Background>
-        </Center>
-      </Grid>
-      <Grid item xs={12} justifyContent="center" display="flex">
-        <Typography variant="h6" textAlign="center">
-          {title}
-        </Typography>
-      </Grid>
-      <Grid item xs={12} justifyContent="center" display="flex">
-        {children}
-      </Grid>
-    </Grid>
-  )
-);
+const TileRoot = muiStyled("div", { name: "Tile" })();
 
 const Background = styled.div`
   width: 64px;
@@ -44,3 +29,38 @@ const Center = styled.div`
   justify-content: center;
   display: flex;
 `;
+
+export const Tile = forwardRef(function <C extends React.ElementType>(
+  {
+    children,
+    icon: Icon,
+    component,
+    title,
+    ...rest
+  }: {
+    component?: C;
+  } & OverrideProps<TileTypeMap, C>,
+  ref: ForwardedRef<HTMLDivElement>
+): JSX.Element {
+  return (
+    <TileRoot as={component} {...rest} ref={ref}>
+      <Grid container>
+        <Grid item xs={12} justifyContent="center" display="flex">
+          <Center>
+            <Background>
+              <Icon color="white" />
+            </Background>
+          </Center>
+        </Grid>
+        <Grid item xs={12} justifyContent="center" display="flex">
+          <Typography variant="h6" textAlign="center">
+            {title}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} justifyContent="center" display="flex">
+          {children}
+        </Grid>
+      </Grid>
+    </TileRoot>
+  );
+});
