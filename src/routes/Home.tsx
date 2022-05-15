@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, FunctionComponent } from "react";
+import { forwardRef, FunctionComponent } from "react";
 import { ReactComponent as Disease } from "../assets/Disease.svg";
 import { ReactComponent as Economic } from "../assets/Economic.svg";
 import { ReactComponent as Education } from "../assets/Education.svg";
@@ -31,20 +31,28 @@ export const Home: FunctionComponent<HomeProps> = () => {
   return (
     <>
       <Container sx={{ pt: [3, 5, 7, 9], pb: [1, 3, 5, 7] }}>
-        <RotaryLogo />
+        <div>
+          <ScrollAnimate direction="right">
+            <div>
+              <RotaryLogo />
+            </div>
+          </ScrollAnimate>
+        </div>
       </Container>
       <Scrollbar />
       <Container maxWidth="sm" sx={{ pt: [1, 2, 3, 4], pb: [1, 2, 3, 4] }}>
-        <Typography
-          textAlign="center"
-          component="h1"
-          variant="h2"
-          align="center"
-          color="text.primary"
-          gutterBottom
-        >
-          Rotary Club Luxembourg
-        </Typography>
+        <ScrollAnimate>
+          <Typography
+            textAlign="center"
+            component="h1"
+            variant="h2"
+            align="center"
+            color="text.primary"
+            gutterBottom
+          >
+            Rotary Club Luxembourg
+          </Typography>
+        </ScrollAnimate>
         <Typography
           textAlign="center"
           variant="h5"
@@ -205,21 +213,9 @@ export const Home: FunctionComponent<HomeProps> = () => {
   );
 };
 
-const Background = forwardRef(
-  (props: PaperProps, ref: ForwardedRef<HTMLDivElement>) => (
-    <Paper
-      sx={{
-        p: 2,
-        m: 1,
-        mb: 4,
-        height: "100%",
-        //  boxSizing: "border-box", height: "100%"
-      }}
-      {...props}
-      ref={ref}
-    />
-  )
-);
+const Background = forwardRef<HTMLDivElement, PaperProps>((props, ref) => (
+  <Paper sx={{ p: 2, m: 1, mb: 4 }} {...props} ref={ref} />
+));
 
 const Scrollbar = () => (
   <HideOnScroll>

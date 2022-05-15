@@ -1,22 +1,27 @@
 import styled from "@emotion/styled";
-import { styled as muiStyled } from "@mui/system";
 import Grid from "@mui/material/Grid";
 import { OverrideProps } from "@mui/material/OverridableComponent";
 import Typography from "@mui/material/Typography";
 import React, { ForwardedRef, forwardRef } from "react";
 
+export type TileProps<
+  D extends React.ElementType = TileTypeMap["defaultComponent"],
+  P = {}
+> = OverrideProps<TileTypeMap<P, D>, D>;
+
 interface TileTypeMap<P = {}, D extends React.ElementType = "div"> {
   props: P & {
     children?: React.ReactNode;
     title: string;
-    icon: React.FunctionComponent<
-      React.SVGProps<SVGSVGElement> & { title?: string }
-    >;
+    icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   };
   defaultComponent: D;
 }
 
-const TileRoot = muiStyled("div", { name: "Tile" })();
+const TileRoot = forwardRef<
+  HTMLDivElement,
+  React.HtmlHTMLAttributes<HTMLDivElement>
+>((props, ref) => <div {...props} ref={ref} />);
 
 const Background = styled.div`
   width: 64px;

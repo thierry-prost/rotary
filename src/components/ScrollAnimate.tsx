@@ -24,8 +24,12 @@ export const ScrollAnimate: FC<ScrollAnimateProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState<boolean>(false);
   return (
-    <Box style={{ height: "100%" }}>
-      <Container direction={direction} ref={containerRef} heightPx={heightPx} />
+    <Box style={{ height: "100%", position: "relative" }}>
+      <Container
+        $direction={direction}
+        $heightPx={heightPx}
+        ref={containerRef}
+      />
       <ReactVisibilitySensor
         partialVisibility
         onChange={(v: boolean) => setVisible(v)}
@@ -36,7 +40,7 @@ export const ScrollAnimate: FC<ScrollAnimateProps> = ({
           style={{ transitionDelay: `${visible ? delay : 0}ms` }}
         >
           <div style={{ height: "100%" }}>
-            <HideDelay delay={delay} visible={visible}>
+            <HideDelay $direction={direction} delay={delay} visible={visible}>
               <Slide
                 in={visible}
                 direction={direction}
@@ -55,14 +59,14 @@ export const ScrollAnimate: FC<ScrollAnimateProps> = ({
 };
 
 const Container = styled.div<{
-  heightPx: number;
-  direction: SlideProps["direction"];
+  $heightPx: number;
+  $direction: SlideProps["direction"];
 }>`
   position: absolute;
-  height: ${(props) => props.heightPx}px;
-  width: ${(props) => props.heightPx}px;
-  ${(props) => props.direction === "right" && "right: 0;"}
-  ${(props) => props.direction === "left" && "left: 0;"}
+  height: ${(props) => props.$heightPx}px;
+  width: ${(props) => props.$heightPx}px;
+  ${(props) => props.$direction === "right" && "right: 0;"}
+  ${(props) => props.$direction === "left" && "left: 0;"}
 `;
 
 const hide = keyframes`
@@ -71,7 +75,13 @@ const hide = keyframes`
   }
 `;
 
-const HideDelay = styled.div<{ delay: number; visible: boolean }>`
+const HideDelay = styled.div<{
+  $direction: SlideProps["direction"];
+  delay: number;
+  visible: boolean;
+}>`
+  ${({ $direction }) =>
+    $direction && ["up", "down"].includes($direction) && "display: flex;"}
   height: 100%;
   visibility: hidden;
   animation: ${hide} 0ms ${({ visible, delay }) => (visible ? delay : 0)}ms

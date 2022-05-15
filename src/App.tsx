@@ -3,6 +3,7 @@ import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
 import { Routes, BrowserRouter, Route, Navigate } from "react-router-dom";
 import { FC, lazy } from "react";
+
 const Home = lazy(() =>
   import("./routes/Home").then((module) => ({ default: module.Home }))
 );
