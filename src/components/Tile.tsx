@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { styled as muiStyled } from "@mui/system";
 import Grid from "@mui/material/Grid";
 import { OverrideProps } from "@mui/material/OverridableComponent";
 import Typography from "@mui/material/Typography";
@@ -18,10 +19,7 @@ interface TileTypeMap<P = {}, D extends React.ElementType = "div"> {
   defaultComponent: D;
 }
 
-const TileRoot = forwardRef<
-  HTMLDivElement,
-  React.HtmlHTMLAttributes<HTMLDivElement>
->((props, ref) => <div {...props} ref={ref} />);
+const TileRoot = muiStyled("div", { name: "Tile" })({});
 
 const Background = styled.div`
   width: 64px;
