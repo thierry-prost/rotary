@@ -1,3 +1,3 @@
-module github.com/thierry-prost/quantech
+module github.com/q-dv/quantech
 
 go 1.18
